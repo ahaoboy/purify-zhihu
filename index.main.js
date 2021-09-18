@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         purify-zhihu
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  屏蔽知乎首页视频
 // @author       You
 // @match        https://www.zhihu.com/
@@ -13,7 +13,7 @@ const inv = 1000 * 60 * 1; // 1 min
 const f = () => {
   const list = Array.from(document.querySelectorAll(q));
   for (const item of list) {
-    if (item.querySelector(".ContentItem")) {
+    if (item.children[0]?.classList?.contains?.("ContentItem")) {
       item.parentElement?.remove?.();
     }
   }
