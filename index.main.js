@@ -7,22 +7,27 @@
 // @match        https://www.zhihu.com/*
 // @icon         https://pic4.zhimg.com/80/v2-88158afcff1e7f4b8b00a1ba81171b61_720w.png
 // @grant        none
-// ==/UserScript==
-const q = ".Card.TopstoryItem.TopstoryItem > .Feed ";
-const inv = 1000 * 1; // 1 s
-const hasVideo = (div) => {
-  const info = div.getAttribute("data-za-extra-module");
-  return info && JSON.parse(info)?.card?.has_video;
-};
-const check = (dom) => {
-  const div = dom.querySelector(".ContentItem");
-  if (hasVideo(dom) || hasVideo(div)) {
-    return true;
-  }
-  return false;
-};
 
-const f = () => {
+//1. 去除非登录下的弹框
+//2. 去除视频推送
+// ==/UserScript==
+const inv = 1000 * 1; // 1 s
+
+// 去除视频
+const f1 = () => {
+  const hasVideo = (div) => {
+    const info = div.getAttribute("data-za-extra-module");
+    return info && JSON.parse(info)?.card?.has_video;
+  };
+  const q = ".Card.TopstoryItem.TopstoryItem > .Feed ";
+  const check = (dom) => {
+    const div = dom.querySelector(".ContentItem");
+    if (dom.classList.contains("Modal-wrapper")) return true;
+    if (hasVideo(dom) || hasVideo(div)) {
+      return true;
+    }
+    return false;
+  };
   const list = Array.from(document.querySelectorAll(q));
   for (const item of list) {
     if (check(item)) {
@@ -31,8 +36,20 @@ const f = () => {
   }
 };
 
+// 去除登录弹框
+const f2 = () => {
+  const q = ".Modal-wrapper";
+  const dom = document.querySelector(q);
+  if (!dom) return;
+  const s = ".Button.Modal-closeButton.Button--plain";
+  const b = document.querySelector(s);
+  b?.click?.();
+};
+const run = () => {
+  [f1, f2].forEach((f) => f());
+};
 (function () {
   "use strict";
-  f();
-  setInterval(f, inv);
+  run();
+  setInterval(run, inv);
 })();
