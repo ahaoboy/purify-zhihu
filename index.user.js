@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         purify-zhihu
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  屏蔽知乎首页视频
 // @author       You
 // @match        https://www.zhihu.com/*
@@ -45,8 +45,17 @@ const f2 = () => {
   const b = document.querySelector(s);
   b?.click?.();
 };
+
+// 去除广告
+const f3 = () => {
+  const adList = Array.from(document.querySelectorAll(".TopstoryItem--advertCard"));
+  for(const item of adList){
+      // item.parentElement?.remove?.();
+      item.innerHTML = ""
+  }
+};
 const run = () => {
-  [f1, f2].forEach((f) => f());
+  [f1, f2, f3].forEach((f) => f());
 };
 (function () {
   "use strict";
