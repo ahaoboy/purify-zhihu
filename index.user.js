@@ -18,10 +18,6 @@ const inv = 1000 * 1; // 1 s
 // 去除视频
 const f1 = () => {
   const hasVideo = (div) => {
-    // 包含视频回答的, svg封面, 可以直接点开播放
-    if (div.querySelector(".RichContent-cover-play")) {
-      return true;
-    }
     // 根据类型信息判断
     const info = div.getAttribute("data-za-extra-module");
     return info && JSON.parse(info)?.card?.has_video;
@@ -66,8 +62,21 @@ const f3 = () => {
     item.innerHTML = "";
   }
 };
+
+// 去除视频回答
+const f4 = () => {
+  const list = Array.from(document.querySelector("div[role='list']")?.children);
+
+  for (const item of list) {
+    // 包含视频回答的, svg封面, 可以直接点开播放
+    if (item.querySelectorAll(".RichContent-cover-play")) {
+      item.remove();
+    }
+  }
+};
+
 const run = () => {
-  [f1, f2, f3].forEach((f) => f());
+  [f1, f2, f3, f4].forEach((f) => f());
 };
 (function () {
   "use strict";
