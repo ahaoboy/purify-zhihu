@@ -4,7 +4,7 @@
 // @version      0.8
 // @description  屏蔽知乎首页视频
 // @author       You
-// @match        https://www.zhihu.com/*
+// @match        https://*.zhihu.com/*
 // @icon         https://pic4.zhimg.com/80/v2-88158afcff1e7f4b8b00a1ba81171b61_720w.png
 // @grant        none
 
