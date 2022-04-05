@@ -65,12 +65,14 @@ const f3 = () => {
 
 // 去除视频回答
 const f4 = () => {
-  const list = Array.from(document.querySelector("div[role='list']")?.children);
+  const list = Array.from(document.querySelector("div[role='list']")?.children || []);
 
   for (const item of list) {
     // 包含视频回答的, svg封面, 可以直接点开播放
-    if (item.querySelectorAll(".RichContent-cover-play")) {
-      item.remove();
+    if (item.querySelector(".RichContent-cover-play") && item.querySelector('.RichContent-cover')) {
+        console.log('aaaa',item)
+        item.innerHTML = "";
+        item.style.display = 'none'
     }
   }
 };
